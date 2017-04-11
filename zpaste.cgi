@@ -8,8 +8,10 @@ use warnings;
 use constant KEY => 'zi8ahkoobahko,xaefeetuphei6eaCee';
 use constant DATADIR => '/space/www/data/zpaste';
 use constant METADIR => '/space/www/data/zpaste/.web';
+use constant DBDIR => '/srv/zpaste';
 use constant METASUFFIX => '.meta';
 use constant BASEURL => 'http://p.example.com/';
+use constant BASETINYURL => 'http://example.com/tiny/';
 
 # documentation
 
@@ -89,7 +91,7 @@ print $q->header(-type => 'text/plain', -charset => 'utf-8');
 
 # attach to the rewrite mapping db
 
-my $rewritedb = catfile(DATADIR, 'rewrite.db');
+my $rewritedb = catfile(DBDIR, 'rewrite.db');
 my %rewrites;
 
 tie %rewrites, 'SDBM_File', $rewritedb, O_RDWR|O_CREAT, 0644;
@@ -188,7 +190,7 @@ if ($q->param('link'))
 {
     $rewrites{$name} = $data;
     untie %rewrites;
-    print BASEURL, $name, "\n";
+    print BASETINYURL, $name, "\n";
     exit;
 }
 
