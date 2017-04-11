@@ -96,9 +96,15 @@ if ($o{'link'})
 }
 elsif (not $o{'del'})
 {
+    my $fh = undef;
+    if ($fname) {
+        open($fh, "<:raw", $fname) || die "error: can't read $fname: $!\n";
+    } else {
+        $fh = \*STDIN;
+    }
     my $content = '';
     my $buf;
-    $content .= $buf while read(STDIN, $buf, 65536) > 0;
+    $content .= $buf while read($fh, $buf, 65536) > 0;
     push @rdata, 'data' => [ undef, 'stdin', 'Content' => $content ];
 }
 
