@@ -14,23 +14,58 @@ Main selling points:
 Usage
 =====
 
-    ... | zpaste [name]
-    zpaste --link http://example.com/ [name]
+Paste the contents of standard input:
 
-The first command above pastes the contents of standard input.  A link
-to the generated paste is written to standard output.  The optional
-argument *name* gives the name (alphanumerics, underscore and dash
-only); if not provided, a random name is used.
+    $ ... | zpaste
+    https://example.com/zpaste/wz9w
 
-The second form makes a tinyurl-style address redirection entry to the
-provided URL.
+Give the paste link an optional ending:
 
-Command line options accepted by the command:
+    $ ... | zpaste --name=somename
+    https://example.com/zpaste/somename
+
+Upload a file:
+
+    $ zpaste somefile.txt
+    https://example.com/zpaste/somefile.txt
+
+Upload a file, optionally give the link a different ending:
+
+    $ zpaste --name=somename.txt somefile.txt
+    https://example.com/zpaste/somename.txt
+
+`zpaste` writes a link to the generated paste to standard output. The
+optional argument passed with **--name** gives the ending of the link
+(alphanumerics, dot, underscore and dash only); if not provided, a random name
+or the passed file name is used.
+
+Generate a redirect link:
+
+    $ zpaste --link http://example.com/
+    https://example.com/tiny/6lu9
+
+Generate a redirect link, with an optional ending:
+
+    $ zpaste --link http://example.com/ somename
+    https://example.com/tiny/somename
+
+This form generates a tinyurl-style address redirection link to the provided
+URL and outputs it to stdout.
+
+Delete an existing paste or redirect link:
+
+    $ zpaste --del wz9w
+    paste 'wz9w' deleted
+
+    $ zpaste --del 6lu9
+    link '6lu9' deleted
+
+The *name* argument is required in this case.
+
+Other command line options accepted by `zpaste`:
 
 * **--force**: If specified, existing pastes/links are overwritten;
   otherwise, a duplicate name is an error.
-* **--del**: Instead of adding a new paste, delete an existing one.
-  The *name* argument is required in this case.
 
 Installation
 ============
