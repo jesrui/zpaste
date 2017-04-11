@@ -63,20 +63,24 @@ $ua->agent('zpaste/0.1');
 # parse command line arguments
 
 my %o = ();
-GetOptions(\%o, 'del', 'force', 'link=s', 'type=s')
+GetOptions(\%o, 'name=s', 'del', 'force', 'link=s', 'type=s')
     or exit 1;
 
 die "usage: $0 [opts] [name]\n" if @ARGV > 1;
-my $name = shift @ARGV;
+my $fname = shift @ARGV;
+
+if ($fname and not $o{'name'}) {
+    $o{'name'} = $fname;
+}
 
 die "paste name not given; mandatory for --del\n"
-    if $o{'del'} and not $name;
+    if $o{'del'} and not $o{'name'};
 
 # construct the request fields
 
 my @rdata = ('key' => KEY);
 
-push @rdata, 'name' => $name if $name;
+push @rdata, 'name' => $o{'name'} if $o{'name'};
 
 push @rdata, 'del' => 1 if $o{'del'};
 push @rdata, 'force' => 1 if $o{'force'};
