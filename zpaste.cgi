@@ -109,7 +109,7 @@ my $name = $q->param('name');
 
 if ($name)
 {
-    $name =~ s/[^a-zA-Z0-9_-]//g;
+    $name =~ s/[^\.a-zA-Z0-9_-]//g;
 }
 else
 {
